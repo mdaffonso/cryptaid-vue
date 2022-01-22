@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <button v-if="!noneRemoved" class="show-removed" @click="toggleRemoved">{{ !showRemoved ? "Mostrar pistas removidas" : "Mostrar pistas possíveis" }}</button>
+    <!-- <button v-if="!noneRemoved" class="show-removed" @click="toggleRemoved">{{ !showRemoved ? "Mostrar pistas removidas" : "Mostrar pistas possíveis" }}</button> -->
   </div>
 </template>
 
