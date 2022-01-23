@@ -1,2 +1,2 @@
 export * from "./useSetupRedirect"
-export * from "./useWidth"
+export * from "./useDimensions"

@@ -43,7 +43,7 @@ import GameScreenYou from "@/components/GameScreenYou.vue"
 import GameScreenAdversary from "@/components/GameScreenAdversary.vue"
 import ConfigScreen from "@/components/ConfigScreen.vue"
 import ToastNotification from '@/components/ToastNotification.vue';
-import { useWidth } from "@/composables"
+import { useDimensions } from "@/composables"
 import "swiper/swiper-bundle.min.css"
 import "swiper/components/effect-cube/effect-cube.min.css";
 SwiperCore.use([EffectCube]);
@@ -165,7 +165,7 @@ export default {
   },
 
   setup () {
-    const { width } = useWidth()
+    const { width } = useDimensions()
     return { width }
   }
 }

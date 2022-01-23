@@ -1,48 +1,23 @@
 <template>
-  <div class="root container screen" :class="color">
+  <div class="root container screen" :class="color" @scroll="handleScroll">
     <h3>Pistas {{ !showRemoved ? "Possíveis" : "Removidas" }}</h3>
 
-    <div v-if="!showRemoved" class="block">
-      <div v-for="category in clues" :key="category.key" class="block">
-        <transition name="fade">
-          <div v-if="category.values.find(c => c.isPossible)" class="block">
-            <h3>{{ category.category }}</h3>
-            <div class="column">
-              <span v-for="value in category.values" :key="value.clue">
-                <transition name="fade">
-                  <button  @click="toggleClue(category.key, value.clue)" v-if="value.isPossible">{{ value.clue }}</button>
-                </transition>
-              </span>
-            </div>
-          </div>
-        </transition>
-      </div>
-    </div>
+    <clues-category @toggle-clue="handleToggleClue" v-for="category in clues" :key="category.key" :group="category" :removed="showRemoved"></clues-category>
+    <p class="none-to-show" v-if="noneToShow">Não há nenhuma pista {{ showRemoved ? "removida" : "possível" }}. Deveria haver pelo menos uma... Confira novamente as peças no tabuleiro.</p>
 
-    <div v-if="showRemoved" class="block">
-      <div v-for="category in clues" :key="category.key" class="block">
-        <transition name="fade">
-          <div v-if="category.values.find(c => !c.isPossible)" class="block">
-            <h3>{{ category.category }}</h3>
-            <div class="column">
-              <span v-for="value in category.values" :key="value.clue">
-                <transition name="fade">
-                  <button class="removed" @click="toggleClue(category.key, value.clue)" v-if="!value.isPossible">{{ value.clue }}</button>
-                </transition>
-              </span>
-            </div>
-          </div>
-        </transition>
-      </div>
-    </div>
-
-    <!-- <button v-if="!noneRemoved" class="show-removed" @click="toggleRemoved">{{ !showRemoved ? "Mostrar pistas removidas" : "Mostrar pistas possíveis" }}</button> -->
+    <button class="show-removed" @click="toggleRemoved">{{ !showRemoved ? "Mostrar pistas removidas" : "Mostrar pistas possíveis" }}</button>
   </div>
 </template>
 
 <script>
 import { colors, gameSetup } from '@/data'
+import { useDimensions } from "@/composables"
+import CluesCategory from "@/components/CluesCategory.vue"
 export default {
+  components: {
+    CluesCategory
+  },
+
   data () {
     return {
       showRemoved: false
@@ -62,12 +37,8 @@ export default {
       return gameSetup.otherPlayers.find(p => p.color === this.color).clues
     },
 
-    noneRemoved () {
-      if (JSON.stringify(this.clues).indexOf('"isPossible":false') === -1) {
-        this.showRemoved = !this.showRemoved
-        return true
-      }
-      return false
+    noneToShow () {
+      return this.showRemoved ? this.clues.every(c => c.values.every(p => p.isPossible)) : this.clues.every(c => c.values.every(p => !p.isPossible))
     }
   },
 
@@ -79,30 +50,27 @@ export default {
 
     toggleRemoved () {
       this.showRemoved = !this.showRemoved
+    },
+
+    handleScroll (e) {
+      // if(Math.floor(e.target.scrollTop) === 0 || Math.ceil(e.target.scrolltop + this.windowHeight) >= e.target.scrollHeight) {
+        e.stopPropagation()
+      // }
+    },
+
+    handleToggleClue (a, b) {
+      this.toggleClue(a, b)
     }
+  },
+
+  setup () {
+    const { height: windowHeight } = useDimensions()
+    return { windowHeight }
   }
 }
 </script>
 
 <style scoped>
-button {
-  text-align: left;
-  background: transparent;
-  border: none;
-  text-decoration: underline;
-  text-decoration-color: #cecc70;
-  text-decoration-style: dashed;
-  padding: 0.25rem;
-  font-size: 1.15rem;
-  color: white;
-  font-weight: 300;
-  z-index: 150;
-}
-
-.removed {
-  opacity: 50%;
-}
-
 .container {
   align-items: flex-start;
 }
@@ -112,23 +80,18 @@ button {
   height: 100vh;
   color: white;
   overflow-y: scroll;
-  z-index: 100;
+  z-index: 500;
 
   scrollbar-color: white transparent;
   scrollbar-width: thin;
 }
 
-.block {
-  width: 100%;
-}
-
-.column {
-  display: flex;
-  flex-flow: column;
-}
-
-.block:last-of-type {
-  margin-bottom: 2rem;
+.none-to-show {
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  opacity: 0.75;
+  font-style: italic;
+  font-weight: 300;
 }
 
 .show-removed {
@@ -136,21 +99,11 @@ button {
   color: white;
   text-decoration: none;
   padding: 1rem 2rem;
-  margin-top: auto;
+  margin: 2rem 0;
   border-radius: 10rem;
   border: none;
   text-transform: uppercase;
   text-align: center;
   font-size: 0.85rem;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 200ms ease-in-out;
-}
-
-.fade-enter, 
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
