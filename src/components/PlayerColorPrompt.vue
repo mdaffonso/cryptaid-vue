@@ -9,6 +9,7 @@
         @click="selectColor(color)"
         >{{ color }}</prompt-button>
     </div>
+    <p>v. 0.75</p>
   </div>
 </template>
 
@@ -46,5 +47,11 @@ export default {
   max-width: 30ch;
   justify-content: center;
   align-items: stretch;
+}
+
+p {
+  opacity: 0.5;
+  font-size: 0.75rem;
+  margin: auto 0 0;
 }
 </style>
