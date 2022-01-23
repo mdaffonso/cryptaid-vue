@@ -9,7 +9,7 @@
         @click="selectColor(color)"
         >{{ color }}</prompt-button>
     </div>
-    <p>v. 1.002</p>
+    <p>v. 1.003</p>
   </div>
 </template>
 

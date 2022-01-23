@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/vue"
 import { gameSetup, toast } from '@/data'
 import GameScreenYou from "@/components/GameScreenYou.vue"
@@ -107,6 +106,10 @@ export default {
     if (!currentGame) {
       this.$router.push("/")
       return
+    }
+
+    if (this.width < 700) {
+      toast.notify("Arraste para os lados para navegar entre as telas.")
     }
 
     Object.entries(currentGame).forEach(p => {
