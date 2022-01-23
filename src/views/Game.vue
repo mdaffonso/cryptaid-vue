@@ -1,10 +1,8 @@
 <template>
   <div class="game-base">
     <swiper 
-      effect="cube" 
       :slides-per-view="1" 
       :space-between="0" 
-      :cubeEffect="cubeConfig" 
       :observer="true" 
       v-if="phoneMode" >
 
@@ -36,7 +34,7 @@
 </template>
 
 <script>
-import SwiperCore, { EffectCube } from 'swiper';
+import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/vue"
 import { gameSetup, toast } from '@/data'
 import GameScreenYou from "@/components/GameScreenYou.vue"
@@ -45,8 +43,7 @@ import ConfigScreen from "@/components/ConfigScreen.vue"
 import ToastNotification from '@/components/ToastNotification.vue';
 import { useDimensions } from "@/composables"
 import "swiper/swiper-bundle.min.css"
-import "swiper/components/effect-cube/effect-cube.min.css";
-SwiperCore.use([EffectCube]);
+
 export default {
   components: {
     GameScreenYou,
@@ -64,15 +61,8 @@ export default {
       screenColor: gameSetup.player.color,
       swipeLeft: false,
       swipeRight: false,
-      cubeConfig: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94
-      },
       showFinalScreen: true,
       animateOut: false,
-      EffectCube,
       toast
     }
   },
