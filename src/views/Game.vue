@@ -69,17 +69,20 @@ export default {
   computed: {
     allowEnd () {
       let counter = {
-        playersWithCluesLeft: this.filteredClues.length,
+        playersWithCluesLeft: new Set(this.filteredClues.map(fc => fc.player)),
         totalCluesLeft: 0
       }
+
       for (let player of this.filteredClues) {
         if (player.cluesLeft.length < 1) {
-          counter.playersWithCluesLeft--
+          counter.playersWithCluesLeft.delete(player.player)
+        } else {
+          counter.playersWithCluesLeft.add(player.player)
         }
         counter.totalCluesLeft += player.cluesLeft.length
       }
 
-      return counter.playersWithCluesLeft === counter.totalCluesLeft
+      return counter.playersWithCluesLeft.size === counter.totalCluesLeft
     },
 
     filteredClues () {
@@ -153,7 +156,6 @@ export default {
 
     showEndScreen () {
       this.showFinalScreen = true
-      this.allowEnd = true
     }
   },
 
@@ -181,7 +183,7 @@ export default {
   width: 100vw;
   height: 100vh;
 
-  z-index: 300;
+  z-index: 600;
 
   transform-origin: right center;
 
@@ -258,6 +260,12 @@ export default {
   to {
     opacity: 0;
     transform: scale(0.75);
+  }
+}
+
+@media (min-width: 700px) {
+  .pre-end {
+    flex-flow: row nowrap;
   }
 }
 </style>

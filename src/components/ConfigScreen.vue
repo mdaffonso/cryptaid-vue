@@ -1,7 +1,7 @@
 <template>
   <div class="root container black">
     <button @click="resetGame" class="reset">Jogar de novo</button>
-    <button @click="showEnd" class="show-end" :class="{ disabled: !allowEnd }">Mostrar somente dicas finais</button>
+    <button @click="showEnd" class="show-end" :class="{ disabled: !allowButton }">Mostrar somente dicas finais</button>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 import { gameSetup, toast } from '@/data'
 export default {
   props: {
-    allowEnd: {
+    allowButton: {
       type: Boolean,
       required: false,
       default: false
@@ -42,7 +42,7 @@ export default {
     },
 
     showEnd () {
-      if (!this.allowEnd) {
+      if (!this.allowButton) {
         toast.notify("Esta opção estará disponível quando houver somente 1 dica de cada jogador restando.")
         return
       }
@@ -79,6 +79,7 @@ export default {
   text-transform: lowercase;
   padding: 1rem 2rem;
   margin: 1rem 1rem;
+  z-index: 600;
 }
 
 .disabled {
