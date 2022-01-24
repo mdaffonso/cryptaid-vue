@@ -24,8 +24,13 @@
   
   <div v-if="showFinalScreen && allowEnd" class="pre-end" :class="{ out: animateOut }">
     <button @click="hideFinalScreen">×</button>
-    <div class="stripe" :class="gameSetup.player.color && gameSetup.player.color">{{ gameSetup.player.clue && gameSetup.player.clue.value }}</div>
-    <div class="stripe" v-for="player in filteredClues" :class="player.player" :key="player.player">{{ player.cluesLeft[0] }}</div>
+    <div class="stripe" :class="gameSetup.player.color && gameSetup.player.color">
+      <p v-if="gameSetup.player.clue">{{ gameSetup.player.clue.value }}</p>
+    </div>
+    <div class="stripe" v-for="player in filteredClues" :class="player.player" :key="player.player">
+      <p v-if="player.cluesLeft[0]">{{ player.cluesLeft[0] }}</p>
+      <p v-else class="no-clues">Não há pistas possíveis para este jogador. Deveria haver pelo menos uma. Verifique novamente o tabuleiro.</p>
+    </div>
   </div>
 
   <teleport to="#notifications" v-if="toast.notificationMessage">
@@ -80,6 +85,10 @@ export default {
           counter.playersWithCluesLeft.add(player.player)
         }
         counter.totalCluesLeft += player.cluesLeft.length
+      }
+
+      if (counter.totalCluesLeft === 0) {
+        return false
       }
 
       return counter.playersWithCluesLeft.size === counter.totalCluesLeft
@@ -195,7 +204,7 @@ export default {
 }
 
 .pre-end div {
-  flex-grow: 1;
+  flex: 1 1 0;
   color: white;
   display: flex;
   justify-content: center;
@@ -227,6 +236,12 @@ export default {
   transform: translateX(-50%);
 
   z-index: 1000;
+}
+
+.no-clues {
+  opacity: 0.5;
+  font-style: italic;
+  font-size: 0.9rem;
 }
 
 .large-screen {

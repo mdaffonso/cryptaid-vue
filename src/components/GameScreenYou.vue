@@ -1,6 +1,6 @@
 <template>
   <div class="root container screen" :class="color">
-    <h3>Sua pista é</h3>
+    <h3 class="game-screen-title">Sua pista é</h3>
     <p>{{ gameSetup.player.clue.value }}</p>
   </div>
 </template>
@@ -36,6 +36,12 @@ p {
   font-weight: 300;
   margin: 2rem 0;
   text-align: center;
+}
+
+.game-screen-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  font-size: 1.75rem;
 }
 
 .screen {

@@ -1,6 +1,6 @@
 <template>
   <div class="root container screen" :class="color" @scroll="handleScroll">
-    <h3>Pistas {{ !showRemoved ? "Possíveis" : "Removidas" }}</h3>
+    <h3 class="game-screen-title">Pistas {{ !showRemoved ? "Possíveis" : "Removidas" }}</h3>
 
     <clues-category @toggle-clue="handleToggleClue" v-for="category in clues" :key="category.key" :group="category" :removed="showRemoved"></clues-category>
     <p class="none-to-show" v-if="noneToShow">Não há nenhuma pista {{ showRemoved ? "removida" : "possível" }}. Deveria haver pelo menos uma... Confira novamente as peças no tabuleiro.</p>
@@ -71,6 +71,12 @@ export default {
 </script>
 
 <style scoped>
+.game-screen-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  font-size: 2.5rem;
+}
+
 .container {
   align-items: flex-start;
 }
