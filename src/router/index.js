@@ -12,6 +12,10 @@ const routes = [
     path: "/play",
     name: "Game",
     component: Game,
+  },
+  {
+    path: "/:catchAll(.*)",
+    redirect: "/"
   }
 ];
 
