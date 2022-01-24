@@ -129,6 +129,7 @@ export default {
     })
 
     this.screenColor = gameSetup.player.color
+    gameSetup.screenOrder = []
     gameSetup.screenOrder[0] = { component: "game-screen-you", color: gameSetup.player.color }
 
     if (!gameSetup.advancedMode) {
@@ -152,7 +153,17 @@ export default {
 
   },
 
+  beforeMount () {
+    window.addEventListener("beforeunload", this.preventNav)
+  },
+
+  beforeUnmount () {
+    window.removeEventListener("beforeunload", this.preventNav)
+  },
+
   methods: {
+    preventNav () {},
+
     hideFinalScreen () {
       const that = this
       if (timer) return
@@ -171,6 +182,11 @@ export default {
   setup () {
     const { width } = useDimensions()
     return { width }
+  },
+
+  beforeRouteLeave (_, _2, next) {
+    const leave = confirm("Você está saindo desta tela. Se continuar, o progresso do seu jogo será perdido. Deseja continuar?")
+    next(leave)
   }
 }
 </script>
