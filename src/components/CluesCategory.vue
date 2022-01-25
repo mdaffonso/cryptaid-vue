@@ -1,11 +1,11 @@
 <template>
   <transition name="fade">
     <div v-if="showGroup" class="block">
-      <h3>{{ group.category }}</h3>
+      <h3>{{ $t(`clues.groups.${group.category}`) }}</h3>
       <div class="column">
         <span v-for="value in group.values" :key="value.clue">
           <transition name="fade">
-            <button  @click="emitClick(group.key, value.clue)" v-if="showValue(value.isPossible)" class="clue-button" :class="{ removed }">{{ value.clue }}</button>
+            <button  @click="emitClick(group.key, value.clue)" v-if="showValue(value.isPossible)" class="clue-button" :class="{ removed }">{{ $t(`clues.clues.${value.clue}`) }}</button>
           </transition>
         </span>
       </div>

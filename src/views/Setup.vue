@@ -9,6 +9,7 @@
 
 <script>
 import { gameSetup, toast } from "@/data";
+import LocalePrompt from "@/components/LocalePrompt.vue"
 import PlayerColorPrompt from "@/components/PlayerColorPrompt.vue";
 import PlayerCluePrompt from "@/components/PlayerCluePrompt.vue";
 import PlayerAdversariesPrompt from "@/components/PlayerAdversariesPrompt.vue";
@@ -23,6 +24,7 @@ export default {
   },
 
   components: {
+    LocalePrompt,
     PlayerColorPrompt,
     PlayerCluePrompt,
     PlayerAdversariesPrompt,
@@ -34,6 +36,8 @@ export default {
   computed: {
     currentComponent () {
       switch (gameSetup.currentSetupPhase) {
+        case "locale-prompt":
+          return "locale-prompt"
         case "select-player-color":
           return "player-color-prompt"
         case "select-player-clue":

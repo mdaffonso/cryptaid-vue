@@ -1,51 +1,63 @@
 <template>
   <div class="container root">
-    <h2>Configurações</h2>
+    <h2>{{ $t('setup.summary.title') }}</h2>
     
     <summary-group>
-      <h3>Sua cor</h3>
+      <button class="locale-button" @click="goTo('locale-prompt')">
+        <img :src="locale" :alt="$t('lang')">
+      </button>
+    </summary-group>
+
+    <summary-group>
+      <h3>{{ $t('setup.summary.yourColor') }}</h3>
       <prompt-button :color="gameSetup.player.color" @click="goTo('select-player-color')">
-        <span>{{ gameSetup.player.color }}</span>
-        <img :src="cog" alt="escolher a sua cor">
+        <span>{{ $t(`colors.${gameSetup.player.color}`) }}</span>
+        <img :src="cog" :alt="$t('setup.summary.yourColorButtonAlt')">
       </prompt-button>
     </summary-group>
 
     <summary-group>
-      <h3>Sua pista</h3>
+      <h3>{{ $t('setup.summary.yourClue') }}</h3>
       <button class="clue" @click="goTo('select-player-clue')">
-        <span>{{ gameSetup.player.clue && gameSetup.player.clue.value }}</span>
-        <img :src="cogBlack" alt="escolher a sua pista">
+        <span>{{ gameSetup.player.clue && $t(`clues.clues.${gameSetup.player.clue.value}`) }}</span>
+        <img :src="cogBlack" :alt="$t('setup.summary.yourClueButtonAlt')">
       </button>
     </summary-group>
 
     <summary-group>
-      <h3>Demais jogadores</h3>
+      <h3>{{ $t('setup.summary.otherPlayers') }}</h3>
       <div class="adversaries">
-        <prompt-button v-for="player in gameSetup.otherPlayers" :key="player.color" :color="player.color" @click="goTo('select-adversaries')">{{ player.color }}</prompt-button>
-        <button class="cog" @click="goTo('select-adversaries')"><img :src="cog" alt="escolher outros jogadores"></button>
+        <prompt-button v-for="player in gameSetup.otherPlayers" :key="player.color" :color="player.color" @click="goTo('select-adversaries')">{{ $t(`colors.${player.color}`) }}</prompt-button>
+        <button class="cog" @click="goTo('select-adversaries')"><img :src="cog" :alt="$t('setup.summary.otherPlayersButtonAlt')"></button>
       </div>
     </summary-group>
 
     <summary-group class="mb-6">
-      <h3>Modo avançado</h3>
+      <h3>{{ $t('setup.summary.advancedMode') }}</h3>
       <button @click="toggleAdvancedMode" class="advanced-button adversaries" :class="{ on: gameSetup.advancedMode }">
-        <span>{{ gameSetup.advancedMode ? "habilitado" : "desabilitado" }}</span>
-        <img :src="currCog" alt="alternar modo avançado">
+        <span>{{ gameSetup.advancedMode ? $t('setup.selectAdvancedModeEnabled') : $t('setup.selectAdvancedModeDisabled') }}</span>
+        <img :src="currCog" :alt="$t('setup.summary.advancedModeButtonAlt')">
       </button>
     </summary-group>
 
     <summary-group class="auto-top">
-      <button class="start-button" @click="startGame">Iniciar</button>
+      <button class="start-button" @click="startGame">{{ $t('setup.summary.startGame') }}</button>
     </summary-group>
   </div>
 </template>
 
 <script>
+
 import { gameSetup, toast } from "@/data"
 import PromptButton from "@/components/PromptButton.vue"
 import SummaryGroup from "@/components/SummaryGroup.vue"
+
+import en from "@/assets/en.png"
+import pt from "@/assets/pt.png"
+
 import cog from "@/assets/configuration.png"
 import cogBlack from "@/assets/configuration-black.png"
+
 export default {
   components: {
     PromptButton,
@@ -57,13 +69,24 @@ export default {
       gameSetup,
       toast,
       cog,
-      cogBlack
+      cogBlack,
+      en,
+      pt
     }
   },
 
   computed: {
     currCog () {
       return gameSetup.advancedMode ? cog : cogBlack
+    },
+
+    locale () {
+      switch(gameSetup.locale) {
+        case "pt":
+          return pt
+        default:
+          return en
+      }
     }
   },
 
@@ -76,7 +99,7 @@ export default {
       gameSetup.advancedMode = !gameSetup.advancedMode
       if (!gameSetup.advancedMode && gameSetup.player.clue.advancedMode) {
         gameSetup.player.clue = null
-        toast.notify("A sua pista é do modo avançado. Escolha outra pista.")
+        toast.notify(this.$t('warnings.advancedModeClueReset'))
         this.goTo("select-player-clue")
       }
     },
@@ -86,7 +109,8 @@ export default {
       localStorage.setItem("currentGame", JSON.stringify(gameSetup))
       this.$router.push("/play")
     }
-  }
+  },
+
 }
 </script>
 
@@ -99,6 +123,17 @@ h3 {
 img {
   max-width: 1rem;
   height: auto;
+}
+
+.locale-button {
+  margin: 0;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+}
+
+.locale-button img {
+  max-width: 4rem;
 }
 
 .clue {

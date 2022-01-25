@@ -1,11 +1,11 @@
 <template>
   <div class="root container screen" :class="color" @scroll="handleScroll">
-    <h3 class="game-screen-title">Pistas {{ !showRemoved ? "Possíveis" : "Removidas" }}</h3>
+    <h3 class="game-screen-title">{{ !showRemoved ? $t('game.possibleClues') : $t('game.removedClues') }}</h3>
 
     <clues-category @toggle-clue="handleToggleClue" v-for="category in clues" :key="category.key" :group="category" :removed="showRemoved"></clues-category>
-    <p class="none-to-show" v-if="noneToShow">Não há nenhuma pista {{ showRemoved ? "removida" : "possível" }}. Deveria haver pelo menos uma... Confira novamente as peças no tabuleiro.</p>
+    <p class="none-to-show" v-if="noneToShow">{{ showRemoved ? $t('game.noCluesRemovedPTag') : $t('game.noCluesAvailablePTag') }}</p>
 
-    <button class="show-removed" @click="toggleRemoved">{{ !showRemoved ? "Mostrar pistas removidas" : "Mostrar pistas possíveis" }}</button>
+    <button class="show-removed" @click="toggleRemoved">{{ !showRemoved ? $t('game.showRemovedCluesButton') : $t('game.showPossibleCluesButton') }}</button>
   </div>
 </template>
 
@@ -53,9 +53,7 @@ export default {
     },
 
     handleScroll (e) {
-      // if(Math.floor(e.target.scrollTop) === 0 || Math.ceil(e.target.scrolltop + this.windowHeight) >= e.target.scrollHeight) {
-        e.stopPropagation()
-      // }
+      e.stopPropagation()
     },
 
     handleToggleClue (a, b) {

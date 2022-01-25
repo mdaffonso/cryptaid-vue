@@ -13,52 +13,50 @@ export const toast = reactive({
 })
 
 export const gameSetup = reactive({
+  locale: localStorage.getItem("locale"),
   player: {
     color: null,
     clue: null,
   },
   otherPlayers: [],
   advancedMode: null,
-  currentSetupPhase: "select-player-color",
-  currentScreenIndex: 0,
-  leftScreen: null,
-  rightScreen: null,
+  currentSetupPhase: localStorage.getItem("locale") ? "select-player-color" : "locale-prompt",
   screenOrder: []
 });
 
-export const colors = ["azul", "verde", "roxo", "marrom", "vermelho"];
+export const colors = ["blue", "green", "purple", "brown", "red"];
 
 export const clues = [
   {
     advancedMode: false,
     key: 1,
-    category: "É um de dois tipos de terreno:",
+    category: "alternateTerrains",
     values: [
-      { clue: "É uma floresta ou um deserto", isPossible: true },
-      { clue: "É uma floresta ou um lago", isPossible: true },
-      { clue: "É uma floresta ou um pântano", isPossible: true },
-      { clue: "É uma floresta ou uma montanha", isPossible: true },
-      { clue: "É um deserto ou um lago", isPossible: true },
-      { clue: "É um deserto ou um pântano", isPossible: true },
-      { clue: "É um deserto ou uma montanha", isPossible: true },
-      { clue: "É um lago ou um pântano", isPossible: true },
-      { clue: "É um lago ou uma montanha", isPossible: true },
-      { clue: "É um pântano ou uma montanha", isPossible: true },
+      { clue: "fd", isPossible: true },
+      { clue: "fl", isPossible: true },
+      { clue: "fs", isPossible: true },
+      { clue: "fm", isPossible: true },
+      { clue: "dl", isPossible: true },
+      { clue: "ds", isPossible: true },
+      { clue: "dm", isPossible: true },
+      { clue: "ls", isPossible: true },
+      { clue: "lm", isPossible: true },
+      { clue: "sm", isPossible: true },
     ],
   },
   {
     advancedMode: false,
     key: 2,
     category:
-      "Está a até 1 espaço de um tipo de terreno ou território de animal:",
+      "withinOne",
     values: [
-      { clue: "Está a até 1 espaço de uma floresta", isPossible: true },
-      { clue: "Está a até 1 espaço de um deserto", isPossible: true },
-      { clue: "Está a até 1 espaço de um lago", isPossible: true },
-      { clue: "Está a até 1 espaço de um pântano", isPossible: true },
-      { clue: "Está a até 1 espaço de uma montanha", isPossible: true },
+      { clue: "oneF", isPossible: true },
+      { clue: "oneD", isPossible: true },
+      { clue: "oneL", isPossible: true },
+      { clue: "oneS", isPossible: true },
+      { clue: "oneM", isPossible: true },
       {
-        clue: "Está a até 1 espaço de um território de animal",
+        clue: "oneA",
         isPossible: true,
       },
     ],
@@ -67,19 +65,19 @@ export const clues = [
     advancedMode: false,
     key: 3,
     category:
-      "Está a até 2 espaços de um tipo de território de animal ou de um tipo de estrutura:",
+      "withinTwo",
     values: [
-      { clue: "Está a até 2 espaços de uma rocha vertical", isPossible: true },
+      { clue: "twoStone", isPossible: true },
       {
-        clue: "Está a até 2 espaços de uma cabana abandonada",
+        clue: "twoShack",
         isPossible: true,
       },
       {
-        clue: "Está a até 2 espaços de um território de puma",
+        clue: "twoCougar",
         isPossible: true,
       },
       {
-        clue: "Está a até 2 espaços de um território de urso",
+        clue: "twoBear",
         isPossible: true,
       },
     ],
@@ -87,47 +85,47 @@ export const clues = [
   {
     advancedMode: false,
     key: 4,
-    category: "Está a até 3 espaços de uma cor de estrutura:",
+    category: "withinThree",
     values: [
-      { clue: "Está a até 3 espaços de uma estrutura azul", isPossible: true },
+      { clue: "threeBlue", isPossible: true },
       {
-        clue: "Está a até 3 espaços de uma estrutura branca",
+        clue: "threeWhite",
         isPossible: true,
       },
-      { clue: "Está a até 3 espaços de uma estrutura verde", isPossible: true },
-      { clue: "Está a até 3 espaços de uma estrutura preta", isPossible: true },
+      { clue: "threeGreen", isPossible: true },
+      { clue: "threeBlack", isPossible: true },
     ],
   },
   {
     advancedMode: true,
     key: 5,
-    category: "NÃO é um de dois tipos de terreno:",
+    category: "notAlternateTerrains",
     values: [
-      { clue: "NÃO é uma floresta ou um deserto", isPossible: true },
-      { clue: "NÃO é uma floresta ou um lago", isPossible: true },
-      { clue: "NÃO é uma floresta ou um pântano", isPossible: true },
-      { clue: "NÃO é uma floresta ou uma montanha", isPossible: true },
-      { clue: "NÃO é um deserto ou um lago", isPossible: true },
-      { clue: "NÃO é um deserto ou um pântano", isPossible: true },
-      { clue: "NÃO é um deserto ou uma montanha", isPossible: true },
-      { clue: "NÃO é um lago ou um pântano", isPossible: true },
-      { clue: "NÃO é um lago ou uma montanha", isPossible: true },
-      { clue: "NÃO é um pântano ou uma montanha", isPossible: true },
+      { clue: "nfd", isPossible: true },
+      { clue: "nfl", isPossible: true },
+      { clue: "nfs", isPossible: true },
+      { clue: "nfm", isPossible: true },
+      { clue: "ndl", isPossible: true },
+      { clue: "nds", isPossible: true },
+      { clue: "ndm", isPossible: true },
+      { clue: "nls", isPossible: true },
+      { clue: "nlm", isPossible: true },
+      { clue: "nsm", isPossible: true },
     ],
   },
   {
     advancedMode: true,
     key: 6,
     category:
-      "NÃO está a até 1 espaço de um tipo de terreno ou território de animal:",
+      "notWithinOne",
     values: [
-      { clue: "NÃO está a até 1 espaço de uma floresta", isPossible: true },
-      { clue: "NÃO está a até 1 espaço de um deserto", isPossible: true },
-      { clue: "NÃO está a até 1 espaço de um lago", isPossible: true },
-      { clue: "NÃO está a até 1 espaço de um pântano", isPossible: true },
-      { clue: "NÃO está a até 1 espaço de uma montanha", isPossible: true },
+      { clue: "nOneF", isPossible: true },
+      { clue: "nOneD", isPossible: true },
+      { clue: "nOneL", isPossible: true },
+      { clue: "nOneS", isPossible: true },
+      { clue: "nOneM", isPossible: true },
       {
-        clue: "NÃO está a até 1 espaço de um território de animal",
+        clue: "nOneA",
         isPossible: true,
       },
     ],
@@ -136,22 +134,22 @@ export const clues = [
     advancedMode: true,
     key: 7,
     category:
-      "NÃO está a até 2 espaços de um tipo de território de animal ou de um tipo de estrutura:",
+      "notWithinTwo",
     values: [
       {
-        clue: "NÃO está a até 2 espaços de uma rocha vertical",
+        clue: "nTwoStone",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 2 espaços de uma cabana abandonada",
+        clue: "nTwoShack",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 2 espaços de um território de puma",
+        clue: "nTwoCougar",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 2 espaços de um território de urso",
+        clue: "nTwoBear",
         isPossible: true,
       },
     ],
@@ -159,22 +157,22 @@ export const clues = [
   {
     advancedMode: true,
     key: 8,
-    category: "NÃO está a até 3 espaços de uma cor de estrutura:",
+    category: "notWithinThree",
     values: [
       {
-        clue: "NÃO está a até 3 espaços de uma estrutura azul",
+        clue: "nThreeBlue",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 3 espaços de uma estrutura branca",
+        clue: "nThreeWhite",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 3 espaços de uma estrutura verde",
+        clue: "nThreeGreen",
         isPossible: true,
       },
       {
-        clue: "NÃO está a até 3 espaços de uma estrutura preta",
+        clue: "nThreeBlack",
         isPossible: true,
       },
     ],

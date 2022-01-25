@@ -7,7 +7,7 @@ const useSetupRedirect = (condition = true, error = null) => {
       valid: !!gameSetup.player.color,
       redirect: "select-player-color"
     },
-    playerClur: {
+    playerClue: {
       valid: !!gameSetup.player.clue,
       redirect: "select-player-clue"
     },
@@ -27,6 +27,7 @@ const useSetupRedirect = (condition = true, error = null) => {
   }
   
   const invalidSetup = Object.entries(redirectMatrix).find(value => !value[1].valid)
+
   if (invalidSetup) {
     gameSetup.currentSetupPhase = invalidSetup[1].redirect
   } else {

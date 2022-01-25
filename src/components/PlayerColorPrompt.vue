@@ -1,15 +1,15 @@
 <template>
   <div class="root container">
-    <h2>Qual é a sua cor?</h2>
+    <h2>{{$t('setup.selectColorPrompt')}}</h2>
     <div class="buttons">
       <prompt-button
         v-for="color in colors"
         :key="color"
         :color="color"
         @click="selectColor(color)"
-        >{{ color }}</prompt-button>
+        >{{ $t(`colors.${color}`) }}</prompt-button>
     </div>
-    <p>v. 1.007</p>
+    <p>v. 1.1</p>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     selectColor(color) {
       gameSetup.player.color = color
       if (gameSetup.otherPlayers.find(p => p.color === color) && gameSetup.otherPlayers.length < 3) {
-        toast.notify("Há menos de 2 adversários marcados. Selecione pelo menos 2.")
+        toast.notify(this.$t('warnings.notEnoughPlayers'))
       }
       gameSetup.otherPlayers = gameSetup.otherPlayers.filter(p => p.color !== color)
 

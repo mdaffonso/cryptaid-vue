@@ -5,13 +5,11 @@
 </template>
 
 <script>
-import { colors } from "@/data";
 export default {
   props: {
     color: {
       type: String,
-      required: true,
-      validator: (value) => colors.includes(value),
+      required: true
     }
   },
 };

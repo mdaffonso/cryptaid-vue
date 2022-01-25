@@ -1,10 +1,10 @@
 <template>
   <div class="root container">
-    <h2>Quais outros jogadores estão na partida?</h2>
+    <h2>{{ $t('setup.selectOpponents') }}</h2>
     <div class="adversary-buttons">
       <select-button v-for="color in filteredColors" :key="color" :color="color" :checked="autoCheck(color)"></select-button>
     </div>
-    <next-button :condition="minimumPlayers" error="É necessário marcar no mínimo 2 jogadores adicionais."></next-button>
+    <next-button :condition="minimumPlayers" :error="$t('warnings.notEnoughPlayers')"></next-button>
   </div>
 </template>
 

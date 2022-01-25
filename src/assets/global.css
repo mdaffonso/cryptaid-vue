@@ -101,22 +101,27 @@ button:active {
   margin-bottom: 6rem;
 }
 
+.red,
 .vermelho {
   background: rgb(158, 6, 36);
 }
 
+.green,
 .verde {
   background: rgb(27, 161, 9);
 }
 
+.blue,
 .azul {
   background: rgb(18, 79, 192);
 }
 
+.brown,
 .marrom {
   background: rgb(107, 77, 22);
 }
 
+.purple,
 .roxo {
   background: rgb(149, 16, 161);
 }

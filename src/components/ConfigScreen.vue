@@ -1,7 +1,7 @@
 <template>
   <div class="root container black">
-    <button @click="resetGame" class="reset">Jogar de novo</button>
-    <button @click="showEnd" class="show-end" :class="{ disabled: !allowButton }">Mostrar somente dicas finais</button>
+    <button @click="resetGame" class="reset">{{ $t('game.playAgain') }}</button>
+    <button @click="showEnd" class="show-end" :class="{ disabled: !allowButton }">{{ $t('game.showFinalClues') }}</button>
   </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
 
     showEnd () {
       if (!this.allowButton) {
-        toast.notify("Esta opção estará disponível quando houver somente 1 dica de cada jogador restando.")
+        toast.notify(this.$t('warnings.showFinalClues'))
         return
       }
 

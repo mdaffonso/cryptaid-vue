@@ -1,10 +1,10 @@
 <template>
   <div class="root container">
-    <h2>Qual é a sua pista?</h2>
+    <h2>{{ $t('setup.selectCluePrompt') }}</h2>
     <div v-for="group in clues" :key="group.key">
       <div v-if="checkAdvancedMode(group)" class="category">
-        <h3>{{ group.category }}</h3>
-        <button v-for="item in group.values" :key="item.clue" @click="setPlayerClue({ value: item.clue, advancedMode: group.advancedMode })">{{ item.clue }}</button>
+        <h3>{{ $t(`clues.groups.${group.category}`) }}</h3>
+        <button v-for="item in group.values" :key="item.clue" @click="setPlayerClue({ value: item.clue, advancedMode: group.advancedMode })">{{ $t(`clues.clues.${item.clue}`) }}</button>
       </div>
     </div>
   </div>

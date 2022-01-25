@@ -1,11 +1,11 @@
 <template>
   <prompt-button :color="color" :class="{ unselected: !active }" @click="togglePlayer">
-    {{color}}
+    {{$t(`colors.${color}`)}}
   </prompt-button>
 </template>
 
 <script>
-import { colors, gameSetup, clues } from "@/data"
+import { gameSetup, clues } from "@/data"
 import PromptButton from "@/components/PromptButton.vue"
 export default {
   components: {
@@ -22,8 +22,7 @@ export default {
   props: {
     color: {
       type: String,
-      required: true,
-      validator: (value) => colors.includes(value),
+      required: true
     },
 
     checked: {

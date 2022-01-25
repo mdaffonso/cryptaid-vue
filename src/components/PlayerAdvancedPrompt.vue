@@ -1,7 +1,7 @@
 <template>
   <div class="container root">
-    <h2>Ativar modo avançado?</h2>
-    <p>Esta opção somente deve ser ativada se a carta de preparação da partida tiver bordas pretas.</p>
+    <h2>{{ $t('setup.selectAdvancedMode') }}</h2>
+    <p>{{ $t('setup.selectAdvancedModePTag') }}</p>
     <button @click="toggleAdvancedMode" class="advanced-button" :class="{ on: gameSetup.advancedMode }">{{ advancedModeButtonText }}</button>
     <next-button></next-button>
   </div>
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     advancedModeButtonText () {
-      return gameSetup.advancedMode ? "Ativado" : "Desativado"
+      return gameSetup.advancedMode ? this.$t("setup.selectAdvancedModeEnabled") : this.$t("setup.selectAdvancedModeDisabled")
     }
   },
 
