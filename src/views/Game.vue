@@ -162,7 +162,9 @@ export default {
   },
 
   methods: {
-    preventNav () {},
+    preventNav (e) {
+      e.returnValue = "Se você atualizar a página, o progresso do jogo atual será perdido. Deseja continuar?"
+    },
 
     hideFinalScreen () {
       const that = this
