@@ -19,6 +19,7 @@ export default {
   methods: {
     resetGame () {
       const resetMatrix = {
+        locale: gameSetup.locale,
         player: {
           color: null,
           clue: null,
