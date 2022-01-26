@@ -21,7 +21,29 @@ export const gameSetup = reactive({
   otherPlayers: [],
   advancedMode: null,
   currentSetupPhase: localStorage.getItem("locale") ? "select-player-color" : "locale-prompt",
-  screenOrder: []
+  screenOrder: [],
+  incompatibles: {
+    fd: ["fd", "ls", "lm", "sm"],
+    fl: ["fl", "ds", "dm", "sm"],
+    fs: ["fs", "ds", "dm", "lm"],
+    fm: ["fm", "dl", "ds", "ls"],
+    dl: ["dl", "fs", "fm", "sm"],
+    ds: ["ds", "fl", "fm", "lm"],
+    dm: ["dm", "fs", "fl", "ls"],
+    ls: ["ls", "fd", "fm", "dm"],
+    lm: ["lm", "fd", "fs", "ds"],
+    sm: ["sm", "fd", "fl", "dl"],
+    nfd: ["nfd", "fd"],
+    nfl: ["nfl", "fl"],
+    nfs: ["nfs", "fs"],
+    nfm: ["nfm", "fm"],
+    ndl: ["ndl", "dl"],
+    nds: ["nds", "ds"],
+    ndm: ["ndm", "dm"],
+    nls: ["nls", "ls"],
+    nlm: ["nlm", "lm"],
+    nsm: ["nsm", "sm"],
+  }
 });
 
 export const colors = ["blue", "green", "purple", "brown", "red"];

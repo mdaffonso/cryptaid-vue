@@ -9,7 +9,7 @@
         @click="selectColor(color)"
         >{{ $t(`colors.${color}`) }}</prompt-button>
     </div>
-    <p>v. 1.101</p>
+    <p>v. 1.2</p>
   </div>
 </template>
 

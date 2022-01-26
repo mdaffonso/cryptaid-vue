@@ -18,28 +18,7 @@ export default {
 
   methods: {
     resetGame () {
-      const resetMatrix = {
-        locale: gameSetup.locale,
-        player: {
-          color: null,
-          clue: null,
-        },
-        otherPlayers: [],
-        advancedMode: null,
-        currentSetupPhase: "select-player-color",
-        currentScreenIndex: 0,
-        leftScreen: null,
-        rightScreen: null,
-        screenOrder: []
-      }
-      if (localStorage.getItem("currentGame")) {
-        localStorage.removeItem("currentGame")
-      }
-      Object.keys(gameSetup).forEach(entry => {
-        gameSetup[entry] = resetMatrix[entry]
-      })
-
-      this.$router.push("/")
+      this.$router.push("/reset")
     },
 
     showEnd () {

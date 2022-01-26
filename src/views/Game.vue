@@ -28,7 +28,7 @@
       <p v-if="gameSetup.player.clue">{{ $t(`clues.clues.${gameSetup.player.clue.value}`) }}</p>
     </div>
     <div class="stripe" v-for="player in filteredClues" :class="player.player" :key="player.player">
-      <p v-if="player.cluesLeft[0]">{{ player.cluesLeft[0] }}</p>
+      <p v-if="player.cluesLeft[0]">{{ $t(`clues.clues.${player.cluesLeft[0]}`) }}</p>
       <p v-else class="no-clues">Não há pistas possíveis para este jogador. Deveria haver pelo menos uma. Verifique novamente o tabuleiro.</p>
     </div>
   </div>
@@ -100,7 +100,7 @@ export default {
         const obj = { player: player.color, cluesLeft: [] }
         player.clues.forEach(group => {
           const cluesStillPossible = group.values.filter(clue => clue.isPossible)
-          obj.cluesLeft.push(...cluesStillPossible.map(clue => this.$t(`clues.clues.${clue.clue}`)))
+          obj.cluesLeft.push(...cluesStillPossible.map(clue => clue.clue))
         })
         filtered.push(obj)
       }
@@ -141,10 +141,9 @@ export default {
 
     gameSetup.otherPlayers.forEach(p => {
       for (let clueCategory of p.clues) {
-        const foundTheClue = clueCategory.values.find(c => c.clue === gameSetup.player.clue.value)
-        if (foundTheClue) {
-          foundTheClue.isPossible = !foundTheClue.isPossible
-        }
+        clueCategory.values
+          .filter(c => gameSetup.incompatibles[gameSetup.player.clue.value].includes(c.clue))
+          .map(c => c.isPossible = !c.isPossible)
       }
 
       gameSetup.screenOrder.push({ 
