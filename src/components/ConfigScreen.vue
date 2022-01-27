@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { gameSetup, toast } from '@/data'
+import { toast } from '@/data'
 export default {
   props: {
     allowButton: {
@@ -18,7 +18,7 @@ export default {
 
   methods: {
     resetGame () {
-      this.$router.push("/reset")
+      this.$emit('resetEvent')
     },
 
     showEnd () {

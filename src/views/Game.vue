@@ -11,14 +11,14 @@
       </swiper-slide>
       
       <swiper-slide key="config">
-        <config-screen :allowButton="allowEnd" @showEndEvent="showEndScreen"></config-screen>
+        <config-screen :allowButton="allowEnd" @showEndEvent="showEndScreen" @resetEvent="resetGame"></config-screen>
       </swiper-slide>
       
     </swiper>
 
     <div v-else class="large-screen">
       <component :is="screen.component" class="column" :color="screen.color" v-for="screen in gameSetup.screenOrder" :key="screen.color"></component>
-      <config-screen :allowButton="allowEnd" @showEndEvent="showEndScreen"></config-screen>
+      <config-screen :allowButton="allowEnd" @showEndEvent="showEndScreen" @resetEvent="resetGame"></config-screen>
     </div>
   </div>
   
@@ -142,7 +142,7 @@ export default {
     gameSetup.otherPlayers.forEach(p => {
       for (let clueCategory of p.clues) {
         clueCategory.values
-          .filter(c => gameSetup.incompatibles[gameSetup.player.clue.value].includes(c.clue))
+          .filter(c => gameSetup.incompatibles[gameSetup.player.clue.value]?.includes(c.clue))
           .map(c => c.isPossible = !c.isPossible)
       }
 
@@ -165,6 +165,11 @@ export default {
   methods: {
     preventNav (e) {
       e.returnValue = this.$t('warnings.leavingScreen')
+      return e.returnValue
+    },
+
+    resetGame () {
+      this.$router.push("/reset")
     },
 
     hideFinalScreen () {
