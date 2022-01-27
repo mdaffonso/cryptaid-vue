@@ -194,7 +194,9 @@ export default {
 
   beforeRouteLeave (_, _2, next) {
     const leave = confirm(this.$t('warnings.leavingScreen'))
-    next(leave)
+    if (leave) {
+      this.$router.push("/reset")
+    }
   }
 }
 </script>
