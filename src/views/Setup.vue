@@ -50,7 +50,7 @@ export default {
           return "setup-summary"
       }
     }
-  }
+  },
 };
 </script>
 
