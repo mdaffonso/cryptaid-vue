@@ -1,11 +1,14 @@
 <template>
   <div class="root container screen" :class="color" @scroll="handleScroll">
-    <h3 class="game-screen-title">{{ !showRemoved ? $t('game.possibleClues') : $t('game.removedClues') }}</h3>
+    <transition name="slide" mode="out-in">
+      <div :key="`alternate-${showRemoved}`">
+        <h3 class="game-screen-title">{{ !showRemoved ? $t('game.possibleClues') : $t('game.removedClues') }}</h3>
 
-    <clues-category @toggle-clue="handleToggleClue" v-for="category in clues" :key="category.key" :group="category" :removed="showRemoved"></clues-category>
-    <p class="none-to-show" v-if="noneToShow">{{ showRemoved ? $t('game.noCluesRemovedPTag') : $t('game.noCluesAvailablePTag') }}</p>
-
-    <button class="show-removed" @click="toggleRemoved">{{ !showRemoved ? $t('game.showRemovedCluesButton') : $t('game.showPossibleCluesButton') }}</button>
+        <clues-category @toggle-clue="handleToggleClue" v-for="category in clues" :key="category.key" :group="category" :removed="showRemoved"></clues-category>
+        <p class="none-to-show" v-if="noneToShow">{{ showRemoved ? $t('game.noCluesRemovedPTag') : $t('game.noCluesAvailablePTag') }}</p>
+        <button class="show-removed" @click="toggleRemoved">{{ !showRemoved ? $t('game.showRemovedCluesButton') : $t('game.showPossibleCluesButton') }}</button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -109,5 +112,27 @@ export default {
   text-transform: uppercase;
   text-align: center;
   font-size: 0.85rem;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: 100ms ease;
+  transition-property: transform, opacity;
+}
+
+.slide-enter-to,
+.slide-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slide-enter-from {
+  transform: translateY(2rem);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateY(-2rem);
+  opacity: 0;
 }
 </style>
