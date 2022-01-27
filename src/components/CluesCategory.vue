@@ -2,13 +2,14 @@
   <transition name="fade">
     <div v-if="showGroup" class="block">
       <h3>{{ $t(`clues.groups.${group.category}`) }}</h3>
-      <div class="column">
-        <span v-for="value in group.values" :key="value.clue">
-          <transition name="fade">
-            <button  @click="emitClick(group.key, value.clue)" v-if="showValue(value.isPossible)" class="clue-button" :class="{ removed }">{{ $t(`clues.clues.${value.clue}`) }}</button>
-          </transition>
-        </span>
-      </div>
+      <transition-group tag="div" class="column" name="fade">
+        <button 
+          v-for="value in filteredGroup" 
+          @click="emitClick(group.key, value.clue)" 
+          class="clue-button" 
+          :class="{ removed }"
+          :key="value.clue">{{ $t(`clues.clues.${value.clue}`) }}</button>
+      </transition-group>
     </div>
   </transition>
 </template>
@@ -31,16 +32,15 @@ export default {
     showGroup () {
       const removed = this.removed
       return !this.group.values.every(c => c.isPossible === removed)
+    },
+    filteredGroup () {
+      return this.group.values.filter(v => this.removed ? !v.isPossible : v.isPossible)
     }
   },
 
   methods: {
     emitClick (group, clue) {
       this.$emit("toggle-clue", group, clue)
-    },
-
-    showValue (bool) {
-      return this.removed ? !bool : bool
     }
   }
 }
@@ -76,11 +76,24 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 200ms ease-in-out;
+  transition: opacity 200ms ease;
+}
+  
+.fade-leave-active {
+  position: absolute;
 }
 
-.fade-enter, 
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+.fade-enter-from, 
 .fade-leave-to {
   opacity: 0;
+}
+
+.fade-move {
+  transition: transform 200ms ease;
 }
 </style>
