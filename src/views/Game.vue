@@ -45,7 +45,7 @@ import GameScreenYou from "@/components/GameScreenYou.vue"
 import GameScreenAdversary from "@/components/GameScreenAdversary.vue"
 import ConfigScreen from "@/components/ConfigScreen.vue"
 import ToastNotification from '@/components/ToastNotification.vue';
-import { useDimensions } from "@/composables"
+import { useDimensions, useReset } from "@/composables"
 import "swiper/swiper-bundle.min.css"
 
 export default {
@@ -195,7 +195,8 @@ export default {
   beforeRouteLeave (_, _2, next) {
     const leave = confirm(this.$t('warnings.leavingScreen'))
     if (leave) {
-      this.$router.push("/reset")
+      useReset()
+      next()
     }
   }
 }
