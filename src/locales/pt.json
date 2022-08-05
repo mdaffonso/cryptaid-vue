@@ -41,7 +41,7 @@
   },
   "clues": {
     "groups": {
-      "alternateTerrains": "É um de dois tipo sde terreno:",
+      "alternateTerrains": "É um de dois tipos de terreno:",
       "withinOne": "Está a até 1 espaço de um tipo de terreno ou território de animal:",
       "withinTwo": "Está a até 2 espaços de um tipo de território de animal ou de um tipo de estrutura:",
       "withinThree": "Está a até 3 espaços de uma cor de estrutura:",
